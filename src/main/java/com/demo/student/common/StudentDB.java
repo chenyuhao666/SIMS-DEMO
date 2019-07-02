@@ -16,7 +16,7 @@ public class StudentDB {
 
     private final static List<StudentDTO> studentDTOList  = new ArrayList<>();
 
-    public List<StudentDTO> getStudentDTOList(){
+    public static List<StudentDTO> getStudentDTOList(){
         return studentDTOList;
     }
 

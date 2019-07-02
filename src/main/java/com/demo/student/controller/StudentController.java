@@ -5,18 +5,19 @@ import com.demo.student.service.StudentService;
 import com.demo.student.util.ExcelUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: chenyuhao
@@ -49,6 +50,21 @@ public class StudentController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    @GetMapping("/import")
+    public void StudentImport(@RequestParam("file") MultipartFile file) throws IOException {
+        Map<String, String> mapper = new HashMap<>();
+        mapper.put("学号","id");
+        mapper.put("姓名","studentName");
+        mapper.put("年龄","age");
+        studentService.importStudent(file);
+    }
+
+    @GetMapping("/get")
+    public List<StudentDTO> getStudents(){
+        return studentService.getStudents();
     }
 
     public void setResponseHeader(HttpServletResponse response, String fileName) {
