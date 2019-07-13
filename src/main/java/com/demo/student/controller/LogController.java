@@ -1,6 +1,7 @@
 package com.demo.student.controller;
 
 import com.demo.student.service.LogService;
+import com.demo.student.test.LogTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +19,12 @@ public class LogController {
     @Autowired
     private LogService logService;
 
+    @Autowired
+    private LogTest logTest;
+
     @GetMapping("/test1")
     public void log1(){
-        logService.log1();
+        logTest.log999();
     }
 
     @GetMapping("/test2")

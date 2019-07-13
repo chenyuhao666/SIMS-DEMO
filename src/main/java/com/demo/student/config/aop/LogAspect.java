@@ -1,10 +1,8 @@
 package com.demo.student.config.aop;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,19 +14,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class LogAspect {
 
-    @Pointcut("execution(public * com.demo.student.service.*.*(..))")
+    @Pointcut("execution(public * com.demo.student.service.*.log*(..))")
     public void log(){
 
     }
 
-    @Before("log()")
+   /** @Before("log()")
     public void doBefore(JoinPoint joinPoint){
-        System.out.println(joinPoint.getSignature().getName() + "执行前");
+        System.out.println(joinPoint.getSignature().getName() + "执行前" + System.currentTimeMillis());
     }
 
     @After("log()")
     public void doAfter(JoinPoint joinPoint){
-        System.out.println(joinPoint.getSignature().getName() + "执行后");
+        System.out.println(joinPoint.getSignature().getName() + "执行后" + System.currentTimeMillis());
+    }**/
+
+    @Around("log()")
+    public Object around(ProceedingJoinPoint point) throws Throwable {
+        return point.proceed();
     }
 
 }
